@@ -1,7 +1,7 @@
 use cosmwasm_std::{
     entry_point, to_binary, to_vec, Binary, ContractResult, CosmosMsg, Deps, DepsMut, Env,
     MessageInfo, QueryRequest, QueryResponse, Reply, Response, StdError, StdResult, SubMsg,
-    SystemResult,
+    SystemResult, Empty
 };
 
 use crate::errors::ReflectError;
@@ -10,6 +10,13 @@ use crate::msg::{
     QueryMsg, RawResponse, SpecialQuery, SpecialResponse,
 };
 use crate::state::{config, config_read, replies, replies_read, State};
+
+/// this is a no-op just to test how this integrates with wasmd
+#[entry_point]
+pub fn migrate(_deps: DepsMut, _env: Env, _msg: Empty) -> StdResult<Response> {
+    Ok(Response::default())
+}
+
 
 #[entry_point]
 pub fn instantiate(
@@ -460,3 +467,5 @@ mod tests {
         assert_eq!(result.events, events);
     }
 }
+
+
